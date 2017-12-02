@@ -5,7 +5,6 @@ import com.typesafe.scalalogging.Logger
 /**
   * Created by Thomas Becker (thomas.becker00@gmail.com) on 11.11.17.
   */
-@Singleton
 class MyHomeControlConnector {
   val logger = Logger[MyHomeControlConnector]
   def mHCSoapService = new SOAP().getSOAPSoap12
