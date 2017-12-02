@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>de.softwareschmied</groupId>
+    <artifactId>myhomecontrol-interface_2.12</artifactId>
+    <packaging>jar</packaging>
+    <description>myHomeControl-interface</description>
+    <version>0.1</version>
+    <name>myHomeControl-interface</name>
+    <organization>
+        <name>de.softwareschmied</name>
+    </organization>
+    <dependencies>
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-library</artifactId>
+            <version>2.12.4</version>
+        </dependency>
+        <dependency>
+            <groupId>de.softwareschmied</groupId>
+            <artifactId>myHomeControl-client</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.typesafe.scala-logging</groupId>
+            <artifactId>scala-logging_2.12</artifactId>
+            <version>3.7.2</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+    </dependencies>
+</project>
