@@ -1,3 +1,5 @@
+package de.softwareschmied.myhomecontrolinterface
+
 import java.time.Instant
 
 import scala.concurrent.ExecutionContext.Implicits.global

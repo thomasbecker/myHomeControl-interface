@@ -1,3 +1,5 @@
+package de.softwareschmied.myhomecontrolinterface
+
 import ch.bootup.SOAP
 import com.typesafe.scalalogging.Logger
 
