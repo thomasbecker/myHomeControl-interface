@@ -9,20 +9,20 @@ import scala.concurrent.{Await, Future}
 /**
   * Created by Thomas Becker (thomas.becker00@gmail.com) on 17.11.17.
   */
-case class MyHomeControlData(heatpumpPowerConsumption: BigDecimal, livingRoomTemp: BigDecimal, sleepingRoomCo2: BigDecimal, timestamp: Long = Instant.now.getEpochSecond)
+case class MyHomeControlData(heatpumpPowerConsumption: Double, livingRoomTemp: Double, sleepingRoomCo2: Double, timestamp: Long = Instant.now.getEpochSecond)
 
 class MyHomeControlCollector {
   def myHomeControlConnector = new MyHomeControlConnector
 
   def collectMyHomeControlData(): MyHomeControlData = {
     val start = System.currentTimeMillis()
-    val sleepingRoomCo2Future: Future[BigDecimal] = Future {
+    val sleepingRoomCo2Future: Future[Double] = Future {
       myHomeControlConnector.getCo2CurrentValue("82c64b73-0746-4dbd-9e06-34c280eb0db6")
     }
-    val livingRoomTempFuture: Future[BigDecimal] = Future {
+    val livingRoomTempFuture: Future[Double] = Future {
       myHomeControlConnector.getTemperatureCurrentValue("e93aae51-9e87-495a-bd20-9b141413ba48")
     }
-    val heatpumpPowerConsumptionFuture: Future[BigDecimal] = Future {
+    val heatpumpPowerConsumptionFuture: Future[Double] = Future {
       myHomeControlConnector.getEnergyMeterCurrentValue("f0c09c4a-b545-4ca0-99bd-830ebfc46145")
     }
 
