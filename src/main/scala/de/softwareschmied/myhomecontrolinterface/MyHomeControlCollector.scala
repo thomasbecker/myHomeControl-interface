@@ -17,13 +17,13 @@ class MyHomeControlCollector {
   def collectMyHomeControlData(): MyHomeControlData = {
     val start = System.currentTimeMillis()
     val sleepingRoomCo2Future: Future[Double] = Future {
-      myHomeControlConnector.getCo2CurrentValue("82c64b73-0746-4dbd-9e06-34c280eb0db6")
+      myHomeControlConnector.getCo2CurrentValue("82c64b73-0746-4dbd-9e06-34c280eb0db6").doubleValue()
     }
     val livingRoomTempFuture: Future[Double] = Future {
-      myHomeControlConnector.getTemperatureCurrentValue("e93aae51-9e87-495a-bd20-9b141413ba48")
+      myHomeControlConnector.getTemperatureCurrentValue("e93aae51-9e87-495a-bd20-9b141413ba48").doubleValue()
     }
     val heatpumpPowerConsumptionFuture: Future[Double] = Future {
-      myHomeControlConnector.getEnergyMeterCurrentValue("f0c09c4a-b545-4ca0-99bd-830ebfc46145")
+      myHomeControlConnector.getEnergyMeterCurrentValue("f0c09c4a-b545-4ca0-99bd-830ebfc46145").doubleValue()
     }
 
     // TODO: replace with some non blocking way
