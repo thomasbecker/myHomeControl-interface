@@ -27,9 +27,9 @@ class MyHomeControlCollector {
     }
 
     // TODO: replace with some non blocking way
-    val sleepingRoomCo2 = Await.result(sleepingRoomCo2Future, 30 seconds)
-    val heatpumpPowerConsumption = Await.result(heatpumpPowerConsumptionFuture, 30 seconds)
-    val livingRoomTemp = Await.result(livingRoomTempFuture, 30 seconds)
+    val sleepingRoomCo2 = Await.result(sleepingRoomCo2Future, 60 seconds)
+    val heatpumpPowerConsumption = Await.result(heatpumpPowerConsumptionFuture, 60 seconds)
+    val livingRoomTemp = Await.result(livingRoomTempFuture, 60 seconds)
     val end = System.currentTimeMillis()
     val myHomeControlData = MyHomeControlData(heatpumpPowerConsumption, livingRoomTemp, sleepingRoomCo2)
     println(s"myHomeControl Result in ${end - start} millis: $myHomeControlData")
