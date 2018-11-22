@@ -81,4 +81,4 @@ project/plugins/project/
 .lib/
 black-pearl/
 
-project/target
+project/target/
