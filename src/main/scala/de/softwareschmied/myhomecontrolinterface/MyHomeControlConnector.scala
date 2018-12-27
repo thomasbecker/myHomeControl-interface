@@ -1,6 +1,6 @@
 package de.softwareschmied.myhomecontrolinterface
 
-import ch.bootup.SOAP
+import ch.bootup.{SOAP, SOAPSoap}
 import com.typesafe.scalalogging.Logger
 
 
@@ -9,30 +9,28 @@ import com.typesafe.scalalogging.Logger
   */
 class MyHomeControlConnector {
   val logger = Logger[MyHomeControlConnector]
-  def mHCSoapService = new SOAP().getSOAPSoap12
+  def mHCSoapService: SOAPSoap = new SOAP().getSOAPSoap12
 
-  def getEnergyMeterCurrentValue(guid: String): BigDecimal = {
-    val consumption = mHCSoapService.energyMeterGetCurrentValuekW(guid)
-    logger.debug(s"guid: $guid, consumption: $consumption ")
+  def getEnergyMeterCurrentValue(guid: String): BigDecimal = logResult(mHCSoapService.energyMeterGetCurrentValuekW, guid, "current consumption")
+
+  def getEnergyMeterCumulativeValue(guid: String): BigDecimal = {
+    val consumption = mHCSoapService.energyMeterGetCumulativeValuekWh(guid, 0)
+    logger.debug(s"guid: $guid, consumption: $consumption")
     consumption
   }
 
-  def getTemperatureCurrentValue(guid: String): BigDecimal = {
-    val temperature = mHCSoapService.roomTemperatureControlGetTemperatureActualValue(guid)
-    logger.debug(s"guid: $guid, temperature: $temperature")
-    temperature
-  }
+  def getTemperatureCurrentValue(guid: String): BigDecimal = logResult(mHCSoapService.roomTemperatureControlGetTemperatureActualValue, guid, "temperature")
 
   def getHumidityCurrentValue(guid: String): BigDecimal = {
-    // doesn't work (yet)
-    val humidity = mHCSoapService.roomTemperatureControlGetActualHumitiyValue(guid)
-    logger.debug(s"guid: $guid, humidity: $humidity")
-    humidity
+    logResult(mHCSoapService.roomTemperatureControlGetActualHumitiyValue,guid, "humidtiy")
   }
 
-  def getCo2CurrentValue(guid: String): BigDecimal = {
-    val co2 = mHCSoapService.roomTemperatureControlGetActualCO2Value(guid)
-    logger.debug(s"guid: $guid, co2: $co2")
-    co2
+  def getCo2CurrentValue(guid: String): BigDecimal = logResult(mHCSoapService.roomTemperatureControlGetActualCO2Value, guid, "co2")
+
+  def logResult(f: String => BigDecimal, guid: String, identifier: String) : BigDecimal = {
+    val result = f(guid)
+    logger.debug(s"$guid, $identifier: $result")
+    result
   }
+
 }

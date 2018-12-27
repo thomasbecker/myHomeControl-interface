@@ -8,15 +8,28 @@ import org.specs2.mutable.Specification
   */
 class MyHomeControlCollectorTest extends Specification {
   val logger = Logger[MyHomeControlCollectorTest]
+
   def myHomeControlCollector = new MyHomeControlCollector
+
   "MyHomeControlCollectorTest" should {
-    "collect should return a filled MyHomeControlData case class" in {
-      val data = myHomeControlCollector.collectMyHomeControlData
+    "collect should return a filled MyHomeControlPowerData case class" in {
+      val data = myHomeControlCollector.collectMyHomeControlPowerData
       logger.info(s"$data")
-      data.heatpumpPowerConsumption must not be(BigDecimal(0))
-      data.sleepingRoomCo2 must not be(BigDecimal(0))
-      data.livingRoomTemp must not be(BigDecimal(0))
+      data.heatpumpCurrentPowerConsumption !== 0
+      data.heatpumpCumulativePowerConsumption !== 0
     }
 
+    "return environment data when collectMyHomeControlEnvironmentData" in {
+      val data = myHomeControlCollector.collectMyHomeControlEnvironmentData
+      logger.info(s"$data")
+      data.livingRoomCo2 > 0
+      data.livingRoomHumidity > 0
+      data.livingRoomTemp > 0
+      data.officeTemp > 0
+      data.sleepingRoomCo2 > 0
+      data.sleepingRoomHumidity > 0
+      data.sleepingRoomTemp > 0
+    }
   }
+
 }
