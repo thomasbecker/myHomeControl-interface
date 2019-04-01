@@ -30,7 +30,7 @@ class MyHomeControlCollector {
 
   def myHomeControlConnector = new MyHomeControlConnector
 
-  private val timeout = 40 seconds
+  private val timeout = 180 seconds
 
   private val heatpumpEnergyMeterId = "f0c09c4a-b545-4ca0-99bd-830ebfc46145"
   private val sleepingRoomCo2SensorId = "82c64b73-0746-4dbd-9e06-34c280eb0db6"
@@ -51,16 +51,22 @@ class MyHomeControlCollector {
 
   def collectMyHomeControlEnvironmentData(): MyHomeControlEnvironmentData = {
     val start = System.currentTimeMillis()
+    // we need to block every call as more calls in parallel seem to break myHomeControl, need to find the right pattern here...
     val sleepingRoomCo2Future = result(myHomeControlConnector.getCo2CurrentValue, sleepingRoomCo2SensorId)
-    // we need to block every couple of calls as more calls in parallel seem to break myHomeControl, need to find the right pattern here...
     val sleepingRoomCo2 = Await.result(sleepingRoomCo2Future, timeout)
+
     val livingRoomCo2Future = result(myHomeControlConnector.getCo2CurrentValue, livingRoomCo2SensorId)
     val livingRoomCo2 = Await.result(livingRoomCo2Future, timeout)
+
     val sleepingRoomTempFuture = result(myHomeControlConnector.getTemperatureCurrentValue, sleepingRoomCo2SensorId)
-    val livingRoomTempFuture = result(myHomeControlConnector.getTemperatureCurrentValue, livingRoomCo2SensorId)
     val sleepingRoomTemp = Await.result(sleepingRoomTempFuture, timeout)
 
+    val livingRoomTempFuture = result(myHomeControlConnector.getTemperatureCurrentValue, livingRoomCo2SensorId)
+    val livingRoomTemp = Await.result(livingRoomTempFuture, timeout)
+
     val livingRoomHumidityFuture = result(myHomeControlConnector.getHumidityCurrentValue, livingRoomCo2SensorId)
+    val livingRoomHumidity = Await.result(livingRoomHumidityFuture, timeout)
+
     val sleepingRoomHumidityFuture = result(myHomeControlConnector.getHumidityCurrentValue, sleepingRoomCo2SensorId)
     val sleepingRoomHumidity = Await.result(sleepingRoomHumidityFuture, timeout)
 
@@ -72,8 +78,6 @@ class MyHomeControlCollector {
     val officeTemp = Await.result(officeTempFuture, timeout)
 
     // TODO: replace with some non blocking way
-    val livingRoomHumidity = Await.result(livingRoomHumidityFuture, timeout)
-    val livingRoomTemp = Await.result(livingRoomTempFuture, timeout)
     val end = System.currentTimeMillis()
     val myHomeControlEnvironmentData = MyHomeControlEnvironmentData(officeTemp, sleepingRoomCo2, sleepingRoomTemp, sleepingRoomHumidity, livingRoomCo2,
       livingRoomTemp, livingRoomHumidity)
