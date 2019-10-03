@@ -3,15 +3,19 @@ package de.softwareschmied.myhomecontrolinterface
 import ch.bootup.{SOAP, SOAPSoap}
 import com.typesafe.scalalogging.Logger
 
+import scala.util.Try
+
 
 /**
-  * Created by Thomas Becker (thomas.becker00@gmail.com) on 11.11.17.
-  */
+ * Created by Thomas Becker (thomas.becker00@gmail.com) on 11.11.17.
+ */
 class MyHomeControlConnector {
   val logger = Logger[MyHomeControlConnector]
+
   def mHCSoapService: SOAPSoap = new SOAP().getSOAPSoap12
 
-  def getEnergyMeterCurrentValue(guid: String): BigDecimal = logResult(mHCSoapService.energyMeterGetCurrentValuekW, guid, "current consumption")
+  def getEnergyMeterCurrentValue(guid: String): BigDecimal =
+    logResult(mHCSoapService.energyMeterGetCurrentValuekW, guid, "current consumption")
 
   def getEnergyMeterCumulativeValue(guid: String): BigDecimal = {
     val consumption = mHCSoapService.energyMeterGetCumulativeValuekWh(guid, 0)
@@ -27,9 +31,13 @@ class MyHomeControlConnector {
 
   def getCo2CurrentValue(guid: String): BigDecimal = logResult(mHCSoapService.roomTemperatureControlGetActualCO2Value, guid, "co2")
 
-  def logResult(f: String => BigDecimal, guid: String, identifier: String) : BigDecimal = {
+  def getProjectStructure() = {
+    mHCSoapService.getProjectStructure
+  }
+
+  def logResult(f: String => BigDecimal, guid: String, identifier: String): BigDecimal = {
     val result = f(guid)
-    logger.debug(s"$guid, $identifier: $result")
+    logger.info(s"$guid, $identifier: $result")
     result
   }
 

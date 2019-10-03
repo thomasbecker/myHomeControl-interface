@@ -15,6 +15,7 @@ server.pid
 /dist/
 .cache
 .idea
+project/target
 ### PlayFramework template
 # Ignore Play! working directory #
 ### JetBrains template
@@ -82,3 +83,4 @@ project/plugins/project/
 black-pearl/
 
 project/target/
+!/.gitignore
