@@ -29,6 +29,14 @@ class MyHomeControlConnector {
     logResult(mHCSoapService.roomTemperatureControlGetActualHumitiyValue,guid, "humidtiy")
   }
 
+  def getTemperatureOfTemperatureHumiditySensor(guid: String): BigDecimal = {
+    logResult(mHCSoapService.temperatureHumidityGetActualTemperatureValue, guid, "temperature")
+  }
+
+  def getHumidityOfTemperatureHumiditySensor(guid: String): BigDecimal = {
+    logResult(mHCSoapService.temperatureHumidityGetActualHumidityValue, guid, "humidity")
+  }
+
   def getCo2CurrentValue(guid: String): BigDecimal = logResult(mHCSoapService.roomTemperatureControlGetActualCO2Value, guid, "co2")
 
   def getProjectStructure() = {

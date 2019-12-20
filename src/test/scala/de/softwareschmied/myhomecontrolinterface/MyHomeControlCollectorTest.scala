@@ -7,6 +7,7 @@ import org.specs2.mutable.Specification
   * Created by Thomas Becker (thomas.becker00@gmail.com) on 17.11.17.
   */
 class MyHomeControlCollectorTest extends Specification {
+  sequential
   val logger = Logger[MyHomeControlCollectorTest]
 
   def myHomeControlCollector = new MyHomeControlCollector
@@ -29,6 +30,8 @@ class MyHomeControlCollectorTest extends Specification {
       data.sleepingRoomCo2 > 0
       data.sleepingRoomHumidity > 0
       data.sleepingRoomTemp > 0
+      data.basementTemp > 0
+      data.basementHumidity > 0
     }
   }
 
